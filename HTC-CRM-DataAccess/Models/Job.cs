@@ -72,12 +72,20 @@ namespace HTC_CRM_DataAccess.Models
 
         public static IEnumerable<Job> GetAll(IDbConnection db)
         {
-            return db.GetAll<Job>();
+            return db.GetAll<Job>().Where(i => i.isDeleted == false);
         }
 
         public static Job GetById(IDbConnection db, int id)
         {
-            return db.Get<Job>(id);
+            Job j = db.Get<Job>(id);
+            if(j.isDeleted)
+            {
+                return null;
+            }
+            else
+            {
+                return j;
+            }
         }
 
         public bool Persist(IDbConnection db)

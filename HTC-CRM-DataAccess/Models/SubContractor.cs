@@ -24,7 +24,7 @@ namespace HTC_CRM_DataAccess.Models
         public string ShipToState { get; set; }
         public string ShipToZip { get; set; }
         //InsuranceCertificat would go here
-        public DateTime InsuranceExpiration { get; set; }
+        public Nullable<DateTime> InsuranceExpiration { get; set; }
         public bool HasUnion { get; set; }
         public bool InstallsCarpet { get; set; }
         public bool InstallsResilient { get; set; }
@@ -71,12 +71,20 @@ namespace HTC_CRM_DataAccess.Models
 
         public static IEnumerable<SubContractor> GetAll(IDbConnection db)
         {
-            return db.GetAll<SubContractor>();
+            return db.GetAll<SubContractor>().Where(i => i.IsDeleted == false);
         }
 
         public static SubContractor GetById(IDbConnection db, int id)
         {
-            return db.Get<SubContractor>(id);
+            SubContractor s = db.Get<SubContractor>(id);
+            if (s.IsDeleted)
+            {
+                return null;
+            }
+            else
+            {
+                return s;
+            }
         }
 
         public bool Persist(IDbConnection db)
