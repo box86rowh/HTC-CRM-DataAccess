@@ -95,3 +95,9 @@ values
 
 select *
 from dbo.Users;
+
+
+select *
+from dbo.AA_SubContractors;
+
+delete from dbo.AA_SubContractors;
