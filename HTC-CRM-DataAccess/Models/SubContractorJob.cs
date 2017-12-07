@@ -45,17 +45,21 @@ namespace HTC_CRM_DataAccess.Models
             return db.GetAll<SubContractorJob>().Where(i => i.IsDeleted == false);
         }
 
-        public static SubContractorJob GetById(IDbConnection db, int id)
+        public static IEnumerable<SubContractorJob> GetAll(IDbConnection db, bool IncludeDeletes)
         {
-            SubContractorJob j = db.Get<SubContractorJob>(id);
-            if (j.IsDeleted)
+            if (IncludeDeletes)
             {
-                return null;
+                return db.GetAll<SubContractorJob>();
             }
             else
             {
-                return j;
+                return db.GetAll<SubContractorJob>().Where(i => i.IsDeleted == false);
             }
+        }
+
+        public static SubContractorJob GetById(IDbConnection db, int id)
+        {
+            return db.Get<SubContractorJob>(id);
         }
 
         public bool Persist(IDbConnection db)

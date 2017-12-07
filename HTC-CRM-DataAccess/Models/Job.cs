@@ -31,7 +31,7 @@ namespace HTC_CRM_DataAccess.Models
         public string Zip { get; set; }
         public float Latitude { get; set; }
         public float Longitude { get; set; }
-        public bool isDeleted { get; set; }
+        public bool IsDeleted { get; set; }
 
         [Computed]
         public int DurationInDays
@@ -72,20 +72,24 @@ namespace HTC_CRM_DataAccess.Models
 
         public static IEnumerable<Job> GetAll(IDbConnection db)
         {
-            return db.GetAll<Job>().Where(i => i.isDeleted == false);
+            return db.GetAll<Job>().Where(i => i.IsDeleted == false);
+        }
+
+        public static IEnumerable<Job> GetAll(IDbConnection db, bool IncludeDeletes)
+        {
+            if (IncludeDeletes)
+            {
+                return db.GetAll<Job>();
+            }
+            else
+            {
+                return db.GetAll<Job>().Where(i => i.IsDeleted == false);
+            }
         }
 
         public static Job GetById(IDbConnection db, int id)
         {
-            Job j = db.Get<Job>(id);
-            if(j.isDeleted)
-            {
-                return null;
-            }
-            else
-            {
-                return j;
-            }
+            return db.Get<Job>(id);
         }
 
         public bool Persist(IDbConnection db)

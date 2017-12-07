@@ -26,17 +26,21 @@ namespace HTC_CRM_DataAccess.Models
             return db.GetAll<Contact>().Where(i => i.IsDeleted == false);
         }
 
-        public static Contact GetById(IDbConnection db, int id)
+        public static IEnumerable<Contact> GetAll(IDbConnection db, bool IncludeDeletes)
         {
-            Contact c = db.Get<Contact>(id);
-            if(c.IsDeleted)
+            if (IncludeDeletes)
             {
-                return null;
+                return db.GetAll<Contact>();
             }
             else
             {
-                return c;
+                return db.GetAll<Contact>().Where(i => i.IsDeleted == false);
             }
+        }
+
+        public static Contact GetById(IDbConnection db, int id)
+        {
+            return db.Get<Contact>(id);
         }
 
         public bool Persist(IDbConnection db)
