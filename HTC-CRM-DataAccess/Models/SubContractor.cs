@@ -5,14 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper.Contrib.Extensions;
 using System.Data;
+using HTC_CRM_DataAccess.Interfaces;
 
 namespace HTC_CRM_DataAccess.Models
 {
     [Table("AA_SubContractors")]
-    public class SubContractor
+    public class SubContractor : BusinessObject<SubContractor>, IDeletable
     {
-        [Key]
-        public int Id { get; set; }
         public int UserId { get; set; }
         public string CompanyName { get; set; }
         public string OfficeStreetAddress { get; set; }
@@ -23,8 +22,8 @@ namespace HTC_CRM_DataAccess.Models
         public string ShipToCity { get; set; }
         public string ShipToState { get; set; }
         public string ShipToZip { get; set; }
-        //InsuranceCertificat would go here
-        public DateTime InsuranceExpiration { get; set; }
+        public int InsuranceCertificateId { get; set; } //this will be an id associated with a file
+        public Nullable<DateTime> InsuranceExpiration { get; set; }
         public bool HasUnion { get; set; }
         public bool InstallsCarpet { get; set; }
         public bool InstallsResilient { get; set; }
@@ -51,8 +50,8 @@ namespace HTC_CRM_DataAccess.Models
             get
             {
 
-                string OfficeAddr = OfficeStreetAddress + " " + OfficeCity + ", " + OfficeState + " " + OfficeZip;
-                return OfficeAddr;
+                string officeAddr = OfficeStreetAddress + " " + OfficeCity + ", " + OfficeState + " " + OfficeZip;
+                return officeAddr;
             }
             set { }
         }
@@ -62,35 +61,11 @@ namespace HTC_CRM_DataAccess.Models
         {
             get
             {
-                string ShipToAddr = ShipToStreetAddress + " " + ShipToCity + ", " + ShipToState + " " + ShipToZip;
-                return ShipToAddr;
+                string shipToAddr = ShipToStreetAddress + " " + ShipToCity + ", " + ShipToState + " " + ShipToZip;
+                return shipToAddr;
             }
             set { }
 
-        }
-
-        public static IEnumerable<SubContractor> GetAll(IDbConnection db)
-        {
-            return db.GetAll<SubContractor>();
-        }
-
-        public static SubContractor GetById(IDbConnection db, int id)
-        {
-            return db.Get<SubContractor>(id);
-        }
-
-        public bool Persist(IDbConnection db)
-        {
-            if (Id > 0)
-            {
-                db.Update<SubContractor>(this);
-                return true;
-            }
-            else
-            {
-                db.Insert<SubContractor>(this);
-                return false;
-            }
         }
     }
 }

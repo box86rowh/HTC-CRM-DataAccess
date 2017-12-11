@@ -40,7 +40,7 @@ namespace DapperTest
 
             //insert a corresponding contact
 
-            Customer c2 = Customer.GetById(db, 1);
+            Customer c2 = Customer.GetById<Customer>(db, 1);
 
             Contact contact = new Contact()
             {
@@ -52,7 +52,7 @@ namespace DapperTest
             };
 
 
-            contact.Persist(db);
+            contact.Persist<Contact>(db);
 
             //attempt to insert a contact for a customer that does not exist
 

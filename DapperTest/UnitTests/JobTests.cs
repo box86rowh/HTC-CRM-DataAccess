@@ -26,6 +26,7 @@ namespace HTC_CRM_DataAccess.Tests
 
             Job job1 = new Job()
             {
+                Id = 1,
                 CustomerId = 1,
                 Name = "XYZ Corp Carpet Install",
                 Description = "Replacing carpet in XYZ corporate offices",
@@ -57,6 +58,7 @@ namespace HTC_CRM_DataAccess.Tests
         {
             Job job1 = new Job()
             {
+                Id = 2,
                 CustomerId = 1,
                 Name = "XYZ Corp Carpet Install",
                 Description = "Replacing carpet in XYZ corporate offices",
@@ -75,19 +77,21 @@ namespace HTC_CRM_DataAccess.Tests
                 Zip = "04210",
                 Latitude = 0,
                 Longitude = 0,
+                IsDeleted = true
             };
 
             Assert.AreEqual(-5000, job1.Variance);
         }
 
         [Test]
-        public void DBOperationsTest()
+        public void JobsDBOperationsTest()
         {
 
             IDbConnection db = DBConnection.GetConnection();
 
             Job job1 = new Job()
             {
+                Id = 3,
                 CustomerId = 1,
                 Name = "XYZ Corp Carpet Install",
                 Description = "Replacing carpet in XYZ corporate offices",
@@ -106,9 +110,19 @@ namespace HTC_CRM_DataAccess.Tests
                 Zip = "04210",
                 Latitude = 0,
                 Longitude = 0,
+                IsDeleted = true
             };
 
-            job1.Persist(db);
+            job1.Persist<Job>(db);
+
+            IEnumerable<Job> jobs1 = Job.GetAll<Job>(db);
+            IEnumerable<Job> jobs2 = Job.GetAll<Job>(db, false);
+            IEnumerable<Job> jobs3 = Job.GetAll<Job>(db, true);
+
+            Assert.AreEqual(19, jobs1.Count());
+            Assert.AreEqual(19, jobs2.Count());
+            Assert.AreEqual(20, jobs3.Count());
         }
+
     }
 }

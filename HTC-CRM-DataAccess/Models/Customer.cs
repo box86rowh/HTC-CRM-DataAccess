@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 using Dapper;
 using Dapper.Contrib.Extensions;
 using System.Data;
+using HTC_CRM_DataAccess.Interfaces;
 
 namespace HTC_CRM_DataAccess.Models
 {
     [Table("AA_Customers")]
-    public class Customer
+    public class Customer : BusinessObject<Customer>, IDeletable
     {
-        [Key]
-        public int Id { get; set; }
         public int UserId { get; set; }
         public string CustName { get; set; }
         public string OfficePhone { get; set; }
@@ -34,8 +33,8 @@ namespace HTC_CRM_DataAccess.Models
         {
             get {
 
-                string OfficeAddr = OfficeStreetAddress + " " + OfficeCity + ", " + OfficeState + " " + OfficeZip;
-                return OfficeAddr;
+                string officeAddr = OfficeStreetAddress + " " + OfficeCity + ", " + OfficeState + " " + OfficeZip;
+                return officeAddr;
             }
             set { }
         }
@@ -45,35 +44,11 @@ namespace HTC_CRM_DataAccess.Models
         {
             get
             {
-                string ShipToAddr = ShipToStreetAddress + " " + ShipToCity + ", " + ShipToState + " " + ShipToZip;
-                return ShipToAddr;
+                string shipToAddr = ShipToStreetAddress + " " + ShipToCity + ", " + ShipToState + " " + ShipToZip;
+                return shipToAddr;
             }
             set { }
             
-        }
-
-        public static IEnumerable<Customer> GetAll(IDbConnection db)
-        {
-            return db.GetAll<Customer>();
-        }
-
-        public static Customer GetById(IDbConnection db, int id)
-        {
-            return db.Get<Customer>(id);
-        }
-
-        public bool Persist(IDbConnection db)
-        {
-            if(Id > 0)
-            {
-                db.Update<Customer>(this);
-                return true;
-            }
-            else
-            {
-                db.Insert<Customer>(this);
-                return false;
-            }
         }
     }
 }

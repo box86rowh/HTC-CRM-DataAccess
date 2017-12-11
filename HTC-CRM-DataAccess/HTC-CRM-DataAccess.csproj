@@ -52,19 +52,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connections\DBConnection.cs" />
+    <Compile Include="Interfaces\IDeletable.cs" />
+    <Compile Include="Models\BusinessObject.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Job.cs" />
-    <Compile Include="Models\Product.cs" />
     <Compile Include="Models\SubContractor.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\SubContractorJob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tests\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

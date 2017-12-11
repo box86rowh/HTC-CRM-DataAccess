@@ -1,7 +1,7 @@
 USE [HTCCRMPortal]
 GO
 
-/****** Object:  Table [dbo].[AA_SubContractors]    Script Date: 12/2/2017 12:31:43 PM ******/
+/****** Object:  Table [dbo].[AA_SubContractors]    Script Date: 12/10/2017 8:23:16 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -20,6 +20,7 @@ CREATE TABLE [dbo].[AA_SubContractors](
 	[ShipToCity] [varchar](50) NOT NULL,
 	[ShipToState] [varchar](2) NOT NULL,
 	[ShipToZip] [varchar](20) NOT NULL,
+	[InsuranceCertificateId] [int] NULL,
 	[InsuranceExpiration] [date] NULL,
 	[HasUnion] [bit] NOT NULL,
 	[InstallsCarpet] [bit] NOT NULL,
