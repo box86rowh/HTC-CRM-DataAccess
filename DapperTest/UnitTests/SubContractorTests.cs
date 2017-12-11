@@ -17,44 +17,45 @@ namespace DapperTest.UnitTests
         public void SubContractorDBOperationsTest()
         {
             IDbConnection db = DBConnection.GetConnection();
-            //SubContractor s = new SubContractor()
-            //{
-            //    UserId = 1,
-            //    CompanyName = "XYZ Carpet Installers",
-            //    OfficeStreetAddress = "1000 Main Street",
-            //    OfficeCity = "Sometown",
-            //    OfficeState = "MA",
-            //    OfficeZip = "9999",
-            //    ShipToStreetAddress = "1000 Main Street",
-            //    ShipToCity = "Sometown",
-            //    ShipToState = "MA",
-            //    ShipToZip = "9999",
-            //    //InsuranceCertificat would go here
-            //    InsuranceExpiration = null
-            //};
+            SubContractor s = new SubContractor()
+            {
+                Id = 5,
+                UserId = 1,
+                CompanyName = "XYZ Carpet Installers",
+                OfficeStreetAddress = "1000 Main Street",
+                OfficeCity = "Sometown",
+                OfficeState = "MA",
+                OfficeZip = "9999",
+                ShipToStreetAddress = "1000 Main Street",
+                ShipToCity = "Sometown",
+                ShipToState = "MA",
+                ShipToZip = "9999",
+                InsuranceCertificateId = 123,
+                InsuranceExpiration = null
+            };
 
-            //s.Persist(db);
+            SubContractor s2 = new SubContractor()
+            {
+                Id = 6,
+                UserId = 1,
+                CompanyName = "ACME Carpet Removers",
+                OfficeStreetAddress = "999 Main Street",
+                OfficeCity = "Anytown",
+                OfficeState = "MA",
+                OfficeZip = "9999",
+                ShipToStreetAddress = "999 Main Street",
+                ShipToCity = "Anytown",
+                ShipToState = "MA",
+                ShipToZip = "9999",
+                InsuranceCertificateId = 123,
+                InsuranceExpiration = null,
+                IsDeleted = true
+            };
 
-            //SubContractor s2 = new SubContractor()
-            //{
-            //    UserId = 1,
-            //    CompanyName = "ACME Carpet Removers",
-            //    OfficeStreetAddress = "999 Main Street",
-            //    OfficeCity = "Anytown",
-            //    OfficeState = "MA",
-            //    OfficeZip = "9999",
-            //    ShipToStreetAddress = "999 Main Street",
-            //    ShipToCity = "Anytown",
-            //    ShipToState = "MA",
-            //    ShipToZip = "9999",
-            //    //InsuranceCertificat would go here
-            //    InsuranceExpiration = null,
-            //    IsDeleted = true
-            //};
+            s.Persist<SubContractor>(db);
+            s2.Persist<SubContractor>(db);
 
-            //s2.Persist(db);
-
-            IEnumerable<SubContractor> contractors = SubContractor.GetAll(db);
+            IEnumerable<SubContractor> contractors = SubContractor.GetAll<SubContractor>(db);
 
             Assert.AreEqual(1, contractors.Count());
         }

@@ -101,3 +101,11 @@ select *
 from dbo.AA_SubContractors;
 
 delete from dbo.AA_SubContractors;
+
+select *
+from dbo.AA_SubContractorJobs;
+
+select *
+from dbo.AA_SubContractorJobs scj
+inner join dbo.AA_Jobs j on j.Id = scj.JobId
+inner join dbo.AA_SubContractors s on s.Id = scj.SubContractorId;

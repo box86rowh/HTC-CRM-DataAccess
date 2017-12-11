@@ -5,14 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper.Contrib.Extensions;
 using System.Data;
+using HTC_CRM_DataAccess.Interfaces;
 
 namespace HTC_CRM_DataAccess.Models
 {
     [Table("AA_Jobs")]
-    public class Job
+    public class Job : BusinessObject<Job>, IDeletable
     {
-        [Key]
-        public int Id { get; set; }
         public int CustomerId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -68,42 +67,6 @@ namespace HTC_CRM_DataAccess.Models
             }
 
             set { }
-        }
-
-        public static IEnumerable<Job> GetAll(IDbConnection db)
-        {
-            return db.GetAll<Job>().Where(i => i.IsDeleted == false);
-        }
-
-        public static IEnumerable<Job> GetAll(IDbConnection db, bool IncludeDeletes)
-        {
-            if (IncludeDeletes)
-            {
-                return db.GetAll<Job>();
-            }
-            else
-            {
-                return db.GetAll<Job>().Where(i => i.IsDeleted == false);
-            }
-        }
-
-        public static Job GetById(IDbConnection db, int id)
-        {
-            return db.Get<Job>(id);
-        }
-
-        public bool Persist(IDbConnection db)
-        {
-            if (Id > 0)
-            {
-                db.Update<Job>(this);
-                return true;
-            }
-            else
-            {
-                db.Insert<Job>(this);
-                return false;
-            }
         }
     }
 }
