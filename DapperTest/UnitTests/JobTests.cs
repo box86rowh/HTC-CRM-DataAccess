@@ -110,10 +110,16 @@ namespace HTC_CRM_DataAccess.Tests
                 Zip = "04210",
                 Latitude = 0,
                 Longitude = 0,
-                IsDeleted = true
+                IsDeleted = true,
+                WhenCreated = Job.GetById<Job>(db, 3).WhenCreated
             };
 
             job1.Persist<Job>(db);
+
+            Job job2 = Job.GetById<Job>(db, 4);
+
+            job2.Name = "ABC Carpet Install";
+            job2.Persist<Job>(db);
 
             IEnumerable<Job> jobs1 = Job.GetAll<Job>(db);
             IEnumerable<Job> jobs2 = Job.GetAll<Job>(db, false);

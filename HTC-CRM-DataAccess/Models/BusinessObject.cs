@@ -13,6 +13,8 @@ namespace HTC_CRM_DataAccess.Models
     {
         [Key]
         public int Id { get; set; }
+        public DateTime LastModified { get; set; }
+        public DateTime WhenCreated { get; set; }
 
         public static T GetById<T>(IDbConnection db, int id)
             where T : BusinessObject<T>
@@ -35,6 +37,8 @@ namespace HTC_CRM_DataAccess.Models
 
         public bool Persist<T>(IDbConnection db)
         {
+            LastModified = DateTime.Now;
+
             if (Id > 0)
             {
                 db.Update(this);
@@ -42,6 +46,7 @@ namespace HTC_CRM_DataAccess.Models
             }
             else
             {
+                WhenCreated = DateTime.Now;
                 db.Insert(this);
                 return false;
             }

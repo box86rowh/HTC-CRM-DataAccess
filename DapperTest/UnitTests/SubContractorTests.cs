@@ -31,7 +31,8 @@ namespace DapperTest.UnitTests
                 ShipToState = "MA",
                 ShipToZip = "9999",
                 InsuranceCertificateId = 123,
-                InsuranceExpiration = null
+                InsuranceExpiration = null,
+                WhenCreated = SubContractor.GetById<SubContractor>(db, 5).WhenCreated
             };
 
             SubContractor s2 = new SubContractor()
@@ -49,7 +50,8 @@ namespace DapperTest.UnitTests
                 ShipToZip = "9999",
                 InsuranceCertificateId = 123,
                 InsuranceExpiration = null,
-                IsDeleted = true
+                IsDeleted = true,
+                WhenCreated = SubContractor.GetById<SubContractor>(db, 6).WhenCreated
             };
 
             s.Persist<SubContractor>(db);
