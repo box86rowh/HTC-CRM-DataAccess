@@ -1,14 +1,11 @@
 USE [HTCCRMPortal]
 GO
 
-/****** Object:  Table [dbo].[AA_Jobs]    Script Date: 12/1/2017 8:53:59 PM ******/
+/****** Object:  Table [dbo].[AA_Jobs]    Script Date: 12/20/2017 6:05:52 AM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
-GO
-
-SET ANSI_PADDING ON
 GO
 
 CREATE TABLE [dbo].[AA_Jobs](
@@ -33,21 +30,33 @@ CREATE TABLE [dbo].[AA_Jobs](
 	[Latitude] [float] NULL,
 	[Longitude] [float] NULL,
 	[IsDeleted] [bit] NOT NULL,
+	[LastModified] [datetime] NOT NULL,
+	[WhenCreated] [datetime] NOT NULL,
+	[ValidToDate] [datetime] NOT NULL,
+	[MasterId] [int] NOT NULL,
  CONSTRAINT [PK_AA_Jobs] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-
-GO
-
-SET ANSI_PADDING OFF
 GO
 
 ALTER TABLE [dbo].[AA_Jobs] ADD  CONSTRAINT [DF_AA_Jobs_CompletionDate]  DEFAULT ('9999-12-31') FOR [CompletionDate]
 GO
 
 ALTER TABLE [dbo].[AA_Jobs] ADD  CONSTRAINT [DF_AA_Jobs_IsDeleted]  DEFAULT ((0)) FOR [IsDeleted]
+GO
+
+ALTER TABLE [dbo].[AA_Jobs] ADD  CONSTRAINT [DF_AA_Jobs_LastModified]  DEFAULT (getdate()) FOR [LastModified]
+GO
+
+ALTER TABLE [dbo].[AA_Jobs] ADD  CONSTRAINT [DF_AA_Jobs_WhenCreated]  DEFAULT (getdate()) FOR [WhenCreated]
+GO
+
+ALTER TABLE [dbo].[AA_Jobs] ADD  CONSTRAINT [DF_AA_Jobs_ValidToDate]  DEFAULT ('9999-12-31') FOR [ValidToDate]
+GO
+
+ALTER TABLE [dbo].[AA_Jobs] ADD  CONSTRAINT [DF_AA_Jobs_MasterId]  DEFAULT ((0)) FOR [MasterId]
 GO
 
 ALTER TABLE [dbo].[AA_Jobs]  WITH CHECK ADD  CONSTRAINT [FK_AccountManager] FOREIGN KEY([AccountManagerId])

@@ -130,5 +130,26 @@ namespace HTC_CRM_DataAccess.Tests
             Assert.AreEqual(20, jobs3.Count());
         }
 
+        [Test]
+        public void JobHistoryTest()
+        {
+            IDbConnection db = DBConnection.GetConnection();
+            Job j1 = Job.GetById<Job>(db, 1);
+            Job j2 = Job.GetById<Job>(db, 1);
+            Job j3 = Job.GetById<Job>(db, 2);
+
+            //Assert.AreEqual(true, j1.EqualsCurrentVersion<Job>(db));
+
+            j2.CompletionDate = Convert.ToDateTime("2017-12-31");
+            j3.Description = "ACME flooring";
+
+            Console.WriteLine(j2.CompletionDate);
+            //Assert.AreEqual(false, j2.EqualsCurrentVersion<Job>(db));
+
+            j2.Persist<Job>(db);
+            //j3.Persist<Job>(db);
+
+
+        }
     }
 }

@@ -11,7 +11,7 @@ using HTC_CRM_DataAccess.Interfaces;
 namespace HTC_CRM_DataAccess.Models
 {
     [Table("AA_Customers")]
-    public class Customer : BusinessObject<Customer>, IDeletable
+    public class Customer : BusinessObject<Customer>, IDeletable, IHistoricalData
     {
         public int UserId { get; set; }
         public string CustName { get; set; }
@@ -27,6 +27,8 @@ namespace HTC_CRM_DataAccess.Models
         public string ShipToZip { get; set; }
         public string Notes { get; set; }
         public bool IsDeleted { get; set; }
+        public DateTime ValidToDate { get; set; }
+        public int MasterId { get; set; }
 
         [Computed]
         public string FullOfficeAddress

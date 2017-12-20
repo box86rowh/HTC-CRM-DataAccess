@@ -1,14 +1,11 @@
 USE [HTCCRMPortal]
 GO
 
-/****** Object:  Table [dbo].[AA_Contacts]    Script Date: 12/1/2017 8:53:26 PM ******/
+/****** Object:  Table [dbo].[AA_Contacts]    Script Date: 12/20/2017 6:05:10 AM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
-GO
-
-SET ANSI_PADDING ON
 GO
 
 CREATE TABLE [dbo].[AA_Contacts](
@@ -18,22 +15,22 @@ CREATE TABLE [dbo].[AA_Contacts](
 	[ContactTitle] [varchar](50) NULL,
 	[ContactPhone] [varchar](13) NOT NULL,
 	[ContactEmail] [varchar](255) NULL,
-	[IsDeleted] [bit] NOT NULL CONSTRAINT [DF_AA_Contacts_IsDeleted]  DEFAULT ((0)),
+	[IsDeleted] [bit] NOT NULL,
+	[LastModified] [datetime] NOT NULL,
+	[WhenCreated] [datetime] NOT NULL,
  CONSTRAINT [PK_AA_Contacts] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
-
 GO
 
-SET ANSI_PADDING OFF
+ALTER TABLE [dbo].[AA_Contacts] ADD  CONSTRAINT [DF_AA_Contacts_IsDeleted]  DEFAULT ((0)) FOR [IsDeleted]
 GO
 
-ALTER TABLE [dbo].[AA_Contacts]  WITH CHECK ADD  CONSTRAINT [FK_Customer] FOREIGN KEY([CustId])
-REFERENCES [dbo].[AA_Customers] ([Id])
+ALTER TABLE [dbo].[AA_Contacts] ADD  CONSTRAINT [DF_AA_Contacts_LastModified]  DEFAULT (getdate()) FOR [LastModified]
 GO
 
-ALTER TABLE [dbo].[AA_Contacts] CHECK CONSTRAINT [FK_Customer]
+ALTER TABLE [dbo].[AA_Contacts] ADD  CONSTRAINT [DF_AA_Contacts_WhenCreated]  DEFAULT (getdate()) FOR [WhenCreated]
 GO
 
