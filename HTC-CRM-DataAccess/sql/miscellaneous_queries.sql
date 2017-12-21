@@ -109,3 +109,40 @@ select *
 from dbo.AA_SubContractorJobs scj
 inner join dbo.AA_Jobs j on j.Id = scj.JobId
 inner join dbo.AA_SubContractors s on s.Id = scj.SubContractorId;
+
+/*job history test*/
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP (1000) [Id]
+      ,[CustomerId]
+      ,[Name]
+      ,[Description]
+      ,[StartDate]
+      ,[CompletionDate]
+      ,[ProjectManagerId]
+      ,[AccountManagerId]
+      ,[EstimatedCost]
+      ,[EstimationNotes]
+      ,[POCost]
+      ,[POStatus]
+      ,[Variance]
+      ,[VarianceNotes]
+      ,[StreetAddress]
+      ,[City]
+      ,[State]
+      ,[Zip]
+      ,[Latitude]
+      ,[Longitude]
+      ,[IsDeleted]
+      ,[LastModified]
+      ,[WhenCreated]
+      ,[ValidToDate]
+      ,[MasterId]
+  FROM [HTCCRMPortal].[dbo].[AA_Jobs]
+  order by MasterId desc;
+
+  update dbo.AA_Jobs
+  set CompletionDate = '2017-12-01', MasterId = 0, ValidToDate = '9999-12-31'
+  where Id = 1;
+
+  delete dbo.AA_Jobs
+  where MasterId = 1;

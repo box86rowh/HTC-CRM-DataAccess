@@ -26,7 +26,8 @@ namespace DapperTest.UnitTests
                 StartDate = DateTime.Today,
                 EndDate = null,
                 EstimatedCost = 30000,
-                ActualCost = 15000
+                ActualCost = 15000,
+                WhenCreated = SubContractorJob.GetById<SubContractorJob>(db, 1).WhenCreated
             };
 
 
@@ -38,8 +39,8 @@ namespace DapperTest.UnitTests
                 StartDate = DateTime.Today,
                 EndDate = DateTime.Today.AddDays(5),
                 EstimatedCost = 12000,
-                ActualCost = 15000
-
+                ActualCost = 15000,
+                WhenCreated = SubContractorJob.GetById<SubContractorJob>(db, 2).WhenCreated
             };
 
             SubContractorJob s3 = new SubContractorJob()
@@ -51,7 +52,8 @@ namespace DapperTest.UnitTests
                 EndDate = DateTime.Today.AddDays(10),
                 EstimatedCost = 20000,
                 ActualCost = 18000,
-                IsDeleted = true
+                IsDeleted = true,
+                WhenCreated = SubContractorJob.GetById<SubContractorJob>(db, 3).WhenCreated
             };
 
             //what is the value of IsDeleted by default?

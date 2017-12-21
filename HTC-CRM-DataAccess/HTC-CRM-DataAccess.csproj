@@ -53,10 +53,12 @@
   <ItemGroup>
     <Compile Include="Connections\DBConnection.cs" />
     <Compile Include="Interfaces\IDeletable.cs" />
+    <Compile Include="Interfaces\IHistoricalData.cs" />
     <Compile Include="Models\BusinessObject.cs" />
     <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Job.cs" />
+    <Compile Include="Models\JobNote.cs" />
     <Compile Include="Models\SubContractor.cs" />
     <Compile Include="Models\SubContractorJob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

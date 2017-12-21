@@ -13,29 +13,11 @@ namespace DapperTest
 {
     class Program
     {
-        //static void Main(string[] args)
-        //{
-        //    IDbConnection db = DBConnection.GetConnection();
-        //    //Product p = new Product()
-        //    //{
-        //    //    ProductName = "Google Pixel",
-        //    //    ProductDescription = "Silver, 32GB"
-        //    //};
-
-        //    //var identity = db.Insert<Product>(p);
-
-        //    //Product p = db.Get<Product>(3);
-        //    //db.Delete(p);
-        //    //p.ProductDescription = "Black, 16GB";
-
-        //    //db.Update<Product>(entityToUpdate: p);
-        //    //db.Update<Product>(new Product { Id = 2, ProductName = "Galaxy S7", ProductDescription = "Blue, 32GB" });
-        //    Product p = Product.GetByName(db, "Galaxy S7");
-        //    Console.WriteLine(p.ProductName);
-        //    Console.Read();
+        static void Main(string[] args)
+        {
 
 
-        //}
+        }
 
 
     }

@@ -1,7 +1,7 @@
 USE [HTCCRMPortal]
 GO
 
-/****** Object:  Table [dbo].[AA_SubContractors]    Script Date: 12/10/2017 8:23:16 PM ******/
+/****** Object:  Table [dbo].[AA_SubContractors]    Script Date: 12/20/2017 6:06:17 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -41,6 +41,8 @@ CREATE TABLE [dbo].[AA_SubContractors](
 	[Rating] [int] NOT NULL,
 	[Notes] [varchar](max) NULL,
 	[IsDeleted] [bit] NOT NULL,
+	[LastModified] [datetime] NOT NULL,
+	[WhenCreated] [datetime] NOT NULL,
  CONSTRAINT [PK_AA_SubContractors] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -100,6 +102,12 @@ ALTER TABLE [dbo].[AA_SubContractors] ADD  CONSTRAINT [DF_AA_SubContractors_Rati
 GO
 
 ALTER TABLE [dbo].[AA_SubContractors] ADD  CONSTRAINT [DF_AA_SubContractors_IsDeleted]  DEFAULT ((0)) FOR [IsDeleted]
+GO
+
+ALTER TABLE [dbo].[AA_SubContractors] ADD  CONSTRAINT [DF_AA_SubContractors_LastModified]  DEFAULT (getdate()) FOR [LastModified]
+GO
+
+ALTER TABLE [dbo].[AA_SubContractors] ADD  CONSTRAINT [DF_AA_SubContractors_WhenCreated]  DEFAULT (getdate()) FOR [WhenCreated]
 GO
 
 ALTER TABLE [dbo].[AA_SubContractors]  WITH CHECK ADD  CONSTRAINT [FK_Users] FOREIGN KEY([UserId])

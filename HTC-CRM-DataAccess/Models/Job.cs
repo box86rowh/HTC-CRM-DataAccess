@@ -9,9 +9,14 @@ using HTC_CRM_DataAccess.Interfaces;
 
 namespace HTC_CRM_DataAccess.Models
 {
+    
     [Table("AA_Jobs")]
-    public class Job : BusinessObject<Job>, IDeletable
+    public class Job : BusinessObject<Job>, IDeletable, IHistoricalData
     {
+        public Job()
+        {
+        }
+
         public int CustomerId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -31,6 +36,8 @@ namespace HTC_CRM_DataAccess.Models
         public float Latitude { get; set; }
         public float Longitude { get; set; }
         public bool IsDeleted { get; set; }
+        public DateTime ValidToDate { get; set; }
+        public int MasterId { get; set; }
 
         [Computed]
         public int DurationInDays
