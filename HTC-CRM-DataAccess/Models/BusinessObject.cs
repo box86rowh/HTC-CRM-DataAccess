@@ -28,33 +28,36 @@ namespace HTC_CRM_DataAccess.Models
         public static IEnumerable<T> GetAll<T>(IDbConnection db)
             where T : BusinessObject<T>
         {
-            return GetAll<T>(db, false);
+            return GetAll<T>(db, false, false);
         }
 
-        public static IEnumerable<T> GetAll<T>(IDbConnection db, bool includeDeletes)
+        public static IEnumerable<T> GetAll<T>(IDbConnection db, bool includeDeletes, bool includeHistory)
             where T : BusinessObject<T>
         {
             var isDeletable = typeof(IDeletable).IsAssignableFrom(typeof(T));
-            return db.GetAll<T>().Where(i => !isDeletable || (!(i as IDeletable).IsDeleted || includeDeletes));
+            var maintainHistory = typeof(IHistoricalData).IsAssignableFrom(typeof(T));
+
+            IEnumerable<T> deletesHandled = db.GetAll<T>().Where(i => !isDeletable || (!(i as IDeletable).IsDeleted || includeDeletes));
+
+            return deletesHandled.Where(i => !maintainHistory || (i as IHistoricalData).ValidToDate > DateTime.Now || includeHistory);
         }
 
         public bool Persist<T>(IDbConnection db)
             where T : BusinessObject<T>
         {
-            LastModified = DateTime.Now;
 
             //flag to indicate whether this object implements the IHistoricalData interface
             var maintainHistory = typeof(IHistoricalData).IsAssignableFrom(typeof(T));
 
             if (Id > 0)
-            {
-                //if we maintain history for this object...
-                if (maintainHistory)
+            { 
+                //if the new incoming version of the record is the different than the one existing in the db...
+                if (!this.EqualsCurrentVersion<T>(db))
                 {
-                    //if the new incoming version of the record is the different than the one existing in the db...
-                    if (!this.EqualsCurrentVersion<T>(db))
+                    LastModified = DateTime.Now;
+                    //if we maintain history for this object...
+                    if (maintainHistory)
                     {
-                        Console.WriteLine("objects are NOT equal");
                         T curr = GetById<T>(db, Id);
                         //set ValidToDate and MasterId fields appropriately for existing and new versions of the object
                         (curr as IHistoricalData).ValidToDate = DateTime.Now;
@@ -65,19 +68,17 @@ namespace HTC_CRM_DataAccess.Models
                         db.Update(this);
                         db.Insert(curr);
                     }
+                    //if we are not maintaining history for this object...
                     else
                     {
-                        Console.WriteLine("Objects ARE equal");
-                        return true;
+                        db.Update(this);
                     }
+                    return true;
                 }
-                //if we are not maintaining history for this object...
                 else
                 {
-                    Console.WriteLine("Not a historical data object");
-                    db.Update(this);
+                    return true;
                 }
-                return true;
             }
             //the record does not already exist in the db
             else
@@ -96,6 +97,8 @@ namespace HTC_CRM_DataAccess.Models
             T curr = GetById<T>(db, Id);
             string newVersion = this.Serialize();
             string currVersion = curr.Serialize();
+            Console.WriteLine(newVersion);
+            Console.WriteLine(currVersion);
             return newVersion == currVersion;
         }
 
