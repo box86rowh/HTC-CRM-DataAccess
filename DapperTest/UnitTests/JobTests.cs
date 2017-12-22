@@ -44,7 +44,7 @@ namespace HTC_CRM_DataAccess.Tests
                 State = "ME",
                 Zip = "04210",
                 Latitude = 0,
-                Longitude = 0,
+                Longitude = 0
             };
 
            
@@ -91,17 +91,17 @@ namespace HTC_CRM_DataAccess.Tests
 
             Job job1 = new Job()
             {
-                Id = 3,
+                Id = 4,
                 CustomerId = 1,
                 Name = "XYZ Corp Carpet Install",
                 Description = "Replacing carpet in XYZ corporate offices",
-                StartDate = DateTime.Today.AddDays(-2),//Convert.ToDateTime("11/29/2017"),
+                StartDate = Convert.ToDateTime("11/29/2017"),
                 CompletionDate = Convert.ToDateTime("12/31/9999"),
                 ProjectManagerId = 1,
                 AccountManagerId = 2,
-                EstimatedCost = 25000,
+                EstimatedCost = 25000.0000M,
                 EstimationNotes = null,
-                POCost = 20000,
+                POCost = 20000.0000M,
                 POStatus = "Not Paid",
                 VarianceNotes = "",
                 StreetAddress = "253 Hotel Road",
@@ -111,23 +111,29 @@ namespace HTC_CRM_DataAccess.Tests
                 Latitude = 0,
                 Longitude = 0,
                 IsDeleted = true,
-                WhenCreated = Job.GetById<Job>(db, 3).WhenCreated
+                WhenCreated = Job.GetById<Job>(db, 4).WhenCreated,
+                ValidToDate = Convert.ToDateTime("9999-12-31"),
+                MasterId = 4
             };
+
+            Console.WriteLine(job1.MasterId);
 
             job1.Persist<Job>(db);
 
-            Job job2 = Job.GetById<Job>(db, 4);
+            //Job job2 = Job.GetById<Job>(db, 4);
 
-            job2.Name = "ABC Carpet Install";
-            job2.Persist<Job>(db);
+            //job2.Name = "ABC Carpet Install";
+           // job2.Persist<Job>(db);
 
             IEnumerable<Job> jobs1 = Job.GetAll<Job>(db);
-            IEnumerable<Job> jobs2 = Job.GetAll<Job>(db, false);
-            IEnumerable<Job> jobs3 = Job.GetAll<Job>(db, true);
+            IEnumerable<Job> jobs2 = Job.GetAll<Job>(db, false, false);
+            IEnumerable<Job> jobs3 = Job.GetAll<Job>(db, true, true);
+            IEnumerable<Job> jobs4 = Job.GetAll<Job>(db, true, false);
 
-            Assert.AreEqual(19, jobs1.Count());
-            Assert.AreEqual(19, jobs2.Count());
-            Assert.AreEqual(20, jobs3.Count());
+            Assert.AreEqual(18, jobs1.Count());
+            Assert.AreEqual(18, jobs2.Count());
+            Assert.AreEqual(21, jobs3.Count());
+            Assert.AreEqual(19, jobs4.Count());
         }
 
         [Test]

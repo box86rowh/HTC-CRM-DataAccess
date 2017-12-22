@@ -71,8 +71,8 @@ namespace DapperTest.UnitTests
             IDbConnection db = DBConnection.GetConnection();
 
             IEnumerable<SubContractorJob> scj1 = SubContractorJob.GetAll<SubContractorJob>(db);
-            IEnumerable<SubContractorJob> scj2 = SubContractorJob.GetAll<SubContractorJob>(db, false);
-            IEnumerable<SubContractorJob> scj3 = SubContractorJob.GetAll<SubContractorJob>(db, true);
+            IEnumerable<SubContractorJob> scj2 = SubContractorJob.GetAll<SubContractorJob>(db, false, false);
+            IEnumerable<SubContractorJob> scj3 = SubContractorJob.GetAll<SubContractorJob>(db, true, false);
 
             Assert.AreEqual(2, scj1.Count());
             Assert.AreEqual(2, scj2.Count());
@@ -84,8 +84,8 @@ namespace DapperTest.UnitTests
 
             //parent GetAll method
             IEnumerable<SubContractorJob> subJobs1 = SubContractorJob.GetAll<SubContractorJob>(db);
-            IEnumerable<SubContractorJob> subJobs2 = SubContractorJob.GetAll<SubContractorJob>(db, false);
-            IEnumerable<SubContractorJob> subJobs3 = SubContractorJob.GetAll<SubContractorJob>(db, true);
+            IEnumerable<SubContractorJob> subJobs2 = SubContractorJob.GetAll<SubContractorJob>(db, false, false);
+            IEnumerable<SubContractorJob> subJobs3 = SubContractorJob.GetAll<SubContractorJob>(db, true, false);
 
             Assert.AreEqual(2, subJobs1.Count());
             Assert.AreEqual(2, subJobs2.Count());
