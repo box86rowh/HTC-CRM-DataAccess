@@ -6,17 +6,15 @@ using System.Threading.Tasks;
 using Dapper.Contrib.Extensions;
 using System.Data;
 using HTC_CRM_DataAccess.Interfaces;
+using Dapper;
 
 namespace HTC_CRM_DataAccess.Models
 {
     
     [Table("AA_Jobs")]
-    public class Job : BusinessObject<Job>, IDeletable, IHistoricalData
+    public class Job : BusinessObject, IDeletable, IHistoricalData
     {
-        public Job()
-        {
-        }
-
+    
         public int CustomerId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -74,6 +72,16 @@ namespace HTC_CRM_DataAccess.Models
             }
 
             set { }
+        }
+
+        public static IEnumerable<Job> GetByCustomerId(IDbConnection db, int custId)
+        {
+            return db.Query<Job>(@"select * from AA_Jobs where CustomerId = @id", new { id = custId });
+        }
+
+        public static IEnumerable<Job> GetBySubContractorId(IDbConnection db, int custId)
+        {
+            return db.Query<Job>(@"select j.* from AA_Jobs j Inner Join AA_SubContractorJobs s on s.JobId = j.Id where CustomerId = @id", new { id = custId });
         }
     }
 }

@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using Dapper.Contrib.Extensions;
 using System.Data;
 using HTC_CRM_DataAccess.Interfaces;
+using Dapper;
 
 namespace HTC_CRM_DataAccess.Models
 {
     [Table("AA_SubContractorJobs")]
-    public class SubContractorJob : BusinessObject<SubContractorJob>, IDeletable
+    public class SubContractorJob : BusinessObject, IDeletable
     {
         public int SubContractorId { get; set; }
         public int JobId { get; set; }

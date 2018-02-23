@@ -1,7 +1,7 @@
-USE [HTCCRMPortal]
+USE [DNNDev]
 GO
 
-/****** Object:  Table [dbo].[AA_Contacts]    Script Date: 12/20/2017 6:05:10 AM ******/
+/****** Object:  Table [dbo].[AA_Contacts]    Script Date: 2/18/2018 4:11:52 PM ******/
 SET ANSI_NULLS ON
 GO
 

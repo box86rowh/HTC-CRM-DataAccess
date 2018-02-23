@@ -17,10 +17,10 @@ namespace DapperTest.UnitTests
         public void CustomerDBOperationsTest()
         {
             IDbConnection db = DBConnection.GetConnection();
-            Customer c = Customer.GetById<Customer>(db, 1);
+            Customer c = Customer.GetById<Customer>(db, 2);
 
             c.CustName = "XYZ Corporation";
-            c.Persist<Customer>(db);
+            Customer.Persist<Customer>(db, c);
         }
      }
 }

@@ -11,9 +11,8 @@ using HTC_CRM_DataAccess.Interfaces;
 namespace HTC_CRM_DataAccess.Models
 {
     [Table("AA_Customers")]
-    public class Customer : BusinessObject<Customer>, IDeletable, IHistoricalData
+    public class Customer : BusinessObject, IDeletable, IHistoricalData
     {
-        public int UserId { get; set; }
         public string CustName { get; set; }
         public string OfficePhone { get; set; }
         public string OfficeFax { get; set; }
