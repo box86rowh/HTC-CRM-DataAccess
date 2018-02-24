@@ -19,7 +19,6 @@ namespace DapperTest.UnitTests
             IDbConnection db = DBConnection.GetConnection();
             SubContractor s = new SubContractor()
             {
-                Id = 5,
                 UserId = 1,
                 CompanyName = "XYZ Carpet Installers",
                 OfficeStreetAddress = "1000 Main Street",
@@ -37,7 +36,6 @@ namespace DapperTest.UnitTests
 
             SubContractor s2 = new SubContractor()
             {
-                Id = 6,
                 UserId = 1,
                 CompanyName = "ACME Carpet Removers",
                 OfficeStreetAddress = "999 Main Street",
@@ -54,8 +52,8 @@ namespace DapperTest.UnitTests
                 WhenCreated = SubContractor.GetById<SubContractor>(db, 6).WhenCreated
             };
 
-            s.Persist<SubContractor>(db);
-            s2.Persist<SubContractor>(db);
+            SubContractor.Persist<SubContractor>(db, s);
+            SubContractor.Persist<SubContractor>(db, s2);
 
             IEnumerable<SubContractor> contractors = SubContractor.GetAll<SubContractor>(db);
 

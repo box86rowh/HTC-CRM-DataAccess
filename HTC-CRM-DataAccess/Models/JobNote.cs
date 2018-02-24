@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 using Dapper.Contrib.Extensions;
 using System.Data;
 using HTC_CRM_DataAccess.Interfaces;
+using Dapper;
 
 namespace HTC_CRM_DataAccess.Models
 {
     [Table("AA_JobNotes")]
-    public class JobNote
+    public class JobNote : BusinessObject
     {
         public int JobId { get; set; }
         public int UserId { get; set; }
         public string Note { get; set; }
-        
+
+        public static IEnumerable<JobNote> GetByJobId(IDbConnection db, int jobId)
+        {
+            return db.Query<JobNote>(@"select * from AA_JobNotes where JobId = @id", new { id = jobId });
+        }
     }
 }

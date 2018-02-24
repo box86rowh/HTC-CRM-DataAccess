@@ -10,7 +10,7 @@ using HTC_CRM_DataAccess.Interfaces;
 namespace HTC_CRM_DataAccess.Models
 {
     [Table("AA_SubContractors")]
-    public class SubContractor : BusinessObject<SubContractor>, IDeletable
+    public class SubContractor : BusinessObject, IDeletable
     {
         public int UserId { get; set; }
         public string CompanyName { get; set; }
