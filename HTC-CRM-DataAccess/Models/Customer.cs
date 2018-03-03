@@ -7,9 +7,11 @@ using Dapper;
 using Dapper.Contrib.Extensions;
 using System.Data;
 using HTC_CRM_DataAccess.Interfaces;
+using TypeLite;
 
 namespace HTC_CRM_DataAccess.Models
 {
+    [TsClass]
     [Table("AA_Customers")]
     public class Customer : BusinessObject, IDeletable, IHistoricalData
     {

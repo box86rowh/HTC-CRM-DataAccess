@@ -7,9 +7,11 @@ using Dapper.Contrib.Extensions;
 using System.Data;
 using HTC_CRM_DataAccess.Interfaces;
 using Dapper;
+using TypeLite;
 
 namespace HTC_CRM_DataAccess.Models
 {
+    [TsClass]
     [Table("AA_JobNotes")]
     public class JobNote : BusinessObject
     {
