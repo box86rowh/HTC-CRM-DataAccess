@@ -13,7 +13,7 @@ namespace HTC_CRM_DataAccess.Models
 {
     [TsClass]
     [Table("AA_Customers")]
-    public class Customer : BusinessObject, IDeletable, IHistoricalData
+    public class Customer : BusinessObject, IDeletable, IHistoricalData, IHydratable
     {
         public string CompanyName { get; set; }
         public string Phone { get; set; }
@@ -31,5 +31,19 @@ namespace HTC_CRM_DataAccess.Models
         [Computed]
         public Address PhysicalAddress { get; set; }
 
+        public void Hydrate(IDbConnection db)
+        {
+            MailingAddress = Address.GetById<Address>(db, MailingAddressId);
+            PhysicalAddress = Address.GetById<Address>(db, PhysicalAddressId);
+        }
+
+        public void HydratedPersist(IDbConnection db)
+        {
+            Address.Persist<Address>(db, MailingAddress);
+            MailingAddressId = MailingAddress.Id;
+
+            Address.Persist<Address>(db, PhysicalAddress);
+            PhysicalAddressId = PhysicalAddress.Id;
+        }
     }
 }

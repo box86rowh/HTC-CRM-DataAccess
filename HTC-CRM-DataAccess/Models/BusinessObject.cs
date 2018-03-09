@@ -22,7 +22,15 @@ namespace HTC_CRM_DataAccess.Models
         public static T GetById<T>(IDbConnection db, int id)
             where T : BusinessObject
         {
-            return db.Get<T>(id);
+            var item = db.Get<T>(id);
+
+            var isHydratable = typeof(IHydratable).IsAssignableFrom(typeof(T));
+            if (isHydratable)
+            {
+                (item as IHydratable).Hydrate(db);
+            }
+
+            return item;
         }
 
         public static IEnumerable<T> GetAll<T>(IDbConnection db)
@@ -36,10 +44,21 @@ namespace HTC_CRM_DataAccess.Models
         {
             var isDeletable = typeof(IDeletable).IsAssignableFrom(typeof(T));
             var maintainHistory = typeof(IHistoricalData).IsAssignableFrom(typeof(T));
+            var isHydratable = typeof(IHydratable).IsAssignableFrom(typeof(T));
 
             IEnumerable<T> deletesHandled = db.GetAll<T>().Where(i => !isDeletable || (!(i as IDeletable).IsDeleted || includeDeletes));
 
-            return deletesHandled.Where(i => !maintainHistory || (i as IHistoricalData).ValidToDate > DateTime.Now || includeHistory);
+            var items = deletesHandled.Where(i => !maintainHistory || (i as IHistoricalData).ValidToDate > DateTime.Now || includeHistory).ToList();
+
+            if (isHydratable)
+            {
+                items.ForEach(i =>
+                {
+                    (i as IHydratable).Hydrate(db);
+                });
+            }
+
+            return items;
         }
 
         public static bool Persist<T>(IDbConnection db, T t)
@@ -48,6 +67,11 @@ namespace HTC_CRM_DataAccess.Models
 
             //flag to indicate whether this object implements the IHistoricalData interface
             var maintainHistory = typeof(IHistoricalData).IsAssignableFrom(typeof(T));
+            var isHydratable = typeof(IHydratable).IsAssignableFrom(typeof(T));
+            if (isHydratable)
+            {
+                (t as IHydratable).HydratedPersist(db);
+            }
 
             if (t.Id > 0)
             {

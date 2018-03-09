@@ -61,6 +61,7 @@
     <Compile Include="Connections\DBConnection.cs" />
     <Compile Include="Interfaces\IDeletable.cs" />
     <Compile Include="Interfaces\IHistoricalData.cs" />
+    <Compile Include="Interfaces\IHydratable.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\BusinessObject.cs" />
     <Compile Include="Models\CustomerContact.cs" />
