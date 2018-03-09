@@ -83,6 +83,10 @@ namespace HTC_CRM_DataAccess.Models
             //the record does not already exist in the db
             else
             {
+                if (maintainHistory)
+                {
+                    (t as IHistoricalData).ValidToDate = DateTime.MaxValue;
+                }
                 //Console.WriteLine("object does not exist in the db");
                 t.WhenCreated = DateTime.Now;
                 t.LastModified = DateTime.Now;
