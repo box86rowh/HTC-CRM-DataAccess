@@ -1,7 +1,7 @@
 USE [DNNDev]
 GO
 
-/****** Object:  Table [dbo].[AA_Customers]    Script Date: 2/18/2018 4:12:00 PM ******/
+/****** Object:  Table [dbo].[AA_Customers]    Script Date: 3/7/2018 7:02:53 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,19 +10,12 @@ GO
 
 CREATE TABLE [dbo].[AA_Customers](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[UserId] [int] NOT NULL,
-	[CustName] [varchar](255) NOT NULL,
-	[OfficePhone] [varchar](13) NULL,
-	[OfficeFax] [varchar](13) NULL,
-	[OfficeStreetAddress] [varchar](255) NULL,
-	[OfficeCity] [varchar](255) NULL,
-	[OfficeState] [varchar](2) NULL,
-	[OfficeZip] [varchar](20) NULL,
-	[ShipToStreetAddress] [varchar](255) NULL,
-	[ShipToCity] [varchar](255) NULL,
-	[ShipToState] [varchar](2) NULL,
-	[ShipToZip] [varchar](20) NULL,
-	[Notes] [varchar](max) NULL,
+	[CompanyName] [varchar](255) NOT NULL,
+	[Phone] [varchar](13) NULL,
+	[Fax] [varchar](13) NULL,
+	[EmailAddress] [varchar](255) NULL,
+	[PhysicalAddressId] [int] NULL,
+	[MailingAddressId] [int] NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[LastModified] [datetime] NOT NULL,
 	[WhenCreated] [datetime] NOT NULL,
@@ -32,7 +25,7 @@ CREATE TABLE [dbo].[AA_Customers](
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 
 ALTER TABLE [dbo].[AA_Customers] ADD  CONSTRAINT [DF_AA_Customers_IsDeleted]  DEFAULT ((0)) FOR [IsDeleted]
@@ -48,6 +41,20 @@ ALTER TABLE [dbo].[AA_Customers] ADD  CONSTRAINT [DF_AA_Customers_ValidToDate]  
 GO
 
 ALTER TABLE [dbo].[AA_Customers] ADD  CONSTRAINT [DF_AA_Customers_MasterId]  DEFAULT ((0)) FOR [MasterId]
+GO
+
+ALTER TABLE [dbo].[AA_Customers]  WITH CHECK ADD  CONSTRAINT [FK_AA_Customers_AA_Addresses] FOREIGN KEY([MailingAddressId])
+REFERENCES [dbo].[AA_Addresses] ([Id])
+GO
+
+ALTER TABLE [dbo].[AA_Customers] CHECK CONSTRAINT [FK_AA_Customers_AA_Addresses]
+GO
+
+ALTER TABLE [dbo].[AA_Customers]  WITH CHECK ADD  CONSTRAINT [FK_AA_Customers_AA_Addresses2] FOREIGN KEY([PhysicalAddressId])
+REFERENCES [dbo].[AA_Addresses] ([Id])
+GO
+
+ALTER TABLE [dbo].[AA_Customers] CHECK CONSTRAINT [FK_AA_Customers_AA_Addresses2]
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'foreign key to user table' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'AA_Customers'

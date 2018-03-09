@@ -1,7 +1,7 @@
 USE [DNNDev]
 GO
 
-/****** Object:  Table [dbo].[AA_JobNotes]    Script Date: 2/18/2018 4:12:17 PM ******/
+/****** Object:  Table [dbo].[AA_JobNotes]    Script Date: 3/7/2018 7:03:37 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -30,6 +30,7 @@ GO
 
 ALTER TABLE [dbo].[AA_JobNotes]  WITH CHECK ADD  CONSTRAINT [FK_JobNotes_Jobs] FOREIGN KEY([JobId])
 REFERENCES [dbo].[AA_Jobs] ([Id])
+ON DELETE CASCADE
 GO
 
 ALTER TABLE [dbo].[AA_JobNotes] CHECK CONSTRAINT [FK_JobNotes_Jobs]
@@ -37,6 +38,7 @@ GO
 
 ALTER TABLE [dbo].[AA_JobNotes]  WITH CHECK ADD  CONSTRAINT [FK_JobNotes_Users] FOREIGN KEY([UserId])
 REFERENCES [dbo].[Users] ([UserID])
+ON DELETE CASCADE
 GO
 
 ALTER TABLE [dbo].[AA_JobNotes] CHECK CONSTRAINT [FK_JobNotes_Users]

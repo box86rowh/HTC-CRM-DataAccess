@@ -1,7 +1,7 @@
 USE [DNNDev]
 GO
 
-/****** Object:  Table [dbo].[AA_Jobs]    Script Date: 2/18/2018 4:12:53 PM ******/
+/****** Object:  Table [dbo].[AA_Jobs]    Script Date: 3/7/2018 7:03:46 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -17,18 +17,9 @@ CREATE TABLE [dbo].[AA_Jobs](
 	[CompletionDate] [date] NULL,
 	[ProjectManagerId] [int] NOT NULL,
 	[AccountManagerId] [int] NOT NULL,
+	[AddressId] [int] NULL,
 	[EstimatedCost] [decimal](19, 4) NULL,
 	[EstimationNotes] [varchar](max) NULL,
-	[POCost] [decimal](19, 4) NOT NULL,
-	[POStatus] [varchar](50) NOT NULL,
-	[Variance] [decimal](19, 4) NULL,
-	[VarianceNotes] [varchar](max) NULL,
-	[StreetAddress] [varchar](255) NOT NULL,
-	[City] [varchar](255) NOT NULL,
-	[State] [varchar](2) NOT NULL,
-	[Zip] [varchar](20) NOT NULL,
-	[Latitude] [float] NULL,
-	[Longitude] [float] NULL,
 	[IsDeleted] [bit] NOT NULL,
 	[LastModified] [datetime] NOT NULL,
 	[WhenCreated] [datetime] NOT NULL,
@@ -59,42 +50,21 @@ GO
 ALTER TABLE [dbo].[AA_Jobs] ADD  CONSTRAINT [DF_AA_Jobs_MasterId]  DEFAULT ((0)) FOR [MasterId]
 GO
 
-ALTER TABLE [dbo].[AA_Jobs]  WITH CHECK ADD  CONSTRAINT [FK_AccountManager] FOREIGN KEY([AccountManagerId])
-REFERENCES [dbo].[Users] ([UserID])
+ALTER TABLE [dbo].[AA_Jobs]  WITH CHECK ADD  CONSTRAINT [FK_AA_Jobs_AA_Addresses] FOREIGN KEY([AddressId])
+REFERENCES [dbo].[AA_Addresses] ([Id])
 GO
 
-ALTER TABLE [dbo].[AA_Jobs] CHECK CONSTRAINT [FK_AccountManager]
+ALTER TABLE [dbo].[AA_Jobs] CHECK CONSTRAINT [FK_AA_Jobs_AA_Addresses]
 GO
 
 ALTER TABLE [dbo].[AA_Jobs]  WITH CHECK ADD  CONSTRAINT [FK_Customers] FOREIGN KEY([CustomerId])
 REFERENCES [dbo].[AA_Customers] ([Id])
+ON DELETE CASCADE
 GO
 
 ALTER TABLE [dbo].[AA_Jobs] CHECK CONSTRAINT [FK_Customers]
 GO
 
-ALTER TABLE [dbo].[AA_Jobs]  WITH CHECK ADD  CONSTRAINT [FK_ProjectManager] FOREIGN KEY([ProjectManagerId])
-REFERENCES [dbo].[Users] ([UserID])
-GO
-
-ALTER TABLE [dbo].[AA_Jobs] CHECK CONSTRAINT [FK_ProjectManager]
-GO
-
-ALTER TABLE [dbo].[AA_Jobs]  WITH CHECK ADD  CONSTRAINT [CK_POStatus] CHECK  (([POStatus]='Paid in Full' OR [POStatus]='Partially Paid' OR [POStatus]='Not Paid'))
-GO
-
-ALTER TABLE [dbo].[AA_Jobs] CHECK CONSTRAINT [CK_POStatus]
-GO
-
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Ensures the account manager is a valid user' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'AA_Jobs', @level2type=N'CONSTRAINT',@level2name=N'FK_AccountManager'
-GO
-
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Foreign key to Customers table' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'AA_Jobs', @level2type=N'CONSTRAINT',@level2name=N'FK_Customers'
-GO
-
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Ensures project manager is a valid user' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'AA_Jobs', @level2type=N'CONSTRAINT',@level2name=N'FK_ProjectManager'
-GO
-
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Limits the POStatus field to valid values' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'AA_Jobs', @level2type=N'CONSTRAINT',@level2name=N'CK_POStatus'
 GO
 

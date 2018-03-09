@@ -23,17 +23,9 @@ namespace HTC_CRM_DataAccess.Models
         public DateTime CompletionDate { get; set; }
         public int ProjectManagerId { get; set; }
         public int AccountManagerId { get; set; }
+        public int AddressId { get; set; }
         public decimal EstimatedCost { get; set; }
         public string EstimationNotes { get; set; }
-        public decimal POCost { get; set; }
-        public string POStatus { get; set; }
-        public string VarianceNotes { get; set; }
-        public string StreetAddress { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Zip { get; set; }
-        public float Latitude { get; set; }
-        public float Longitude { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime ValidToDate { get; set; }
         public int MasterId { get; set; }
@@ -57,23 +49,6 @@ namespace HTC_CRM_DataAccess.Models
             set { }
         }
 
-        [Computed]
-        public decimal Variance
-        {
-            get
-            {
-                if(EstimatedCost == 0)
-                {
-                    return 0;
-                } 
-                else
-                {
-                    return POCost - EstimatedCost;
-                }
-            }
-
-            set { }
-        }
 
         public static IEnumerable<Job> GetByCustomerId(IDbConnection db, int custId)
         {
@@ -81,7 +56,7 @@ namespace HTC_CRM_DataAccess.Models
         }
 
         public static IEnumerable<Job> GetBySubContractorId(IDbConnection db, int custId)
-        {
+        {   
             return db.Query<Job>(@"select j.* from AA_Jobs j Inner Join AA_SubContractorJobs s on s.JobId = j.Id where CustomerId = @id", new { id = custId });
         }
     }

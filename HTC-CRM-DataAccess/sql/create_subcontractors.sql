@@ -1,7 +1,7 @@
 USE [DNNDev]
 GO
 
-/****** Object:  Table [dbo].[AA_SubContractors]    Script Date: 2/18/2018 4:13:18 PM ******/
+/****** Object:  Table [dbo].[AA_SubContractors]    Script Date: 3/7/2018 7:04:40 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -112,6 +112,7 @@ GO
 
 ALTER TABLE [dbo].[AA_SubContractors]  WITH CHECK ADD  CONSTRAINT [FK_Users] FOREIGN KEY([UserId])
 REFERENCES [dbo].[Users] ([UserID])
+ON DELETE CASCADE
 GO
 
 ALTER TABLE [dbo].[AA_SubContractors] CHECK CONSTRAINT [FK_Users]
