@@ -25,5 +25,11 @@ namespace HTC_CRM_DataAccess.Models
         public DateTime ValidToDate { get; set; }
         public int MasterId { get; set; }
 
+        [Computed]
+        public Address MailingAddress { get; set; }
+
+        [Computed]
+        public Address PhysicalAddress { get; set; }
+
     }
 }
